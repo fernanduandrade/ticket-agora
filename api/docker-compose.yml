@@ -1,0 +1,6 @@
+﻿services:
+  ticketagora.api:
+    image: ticketagora.api
+    build:
+      context: .
+      dockerfile: src/TicketAgora.API/Dockerfile
