@@ -1,0 +1,1 @@
+namespace ETicket.Infrastructure.Setup;

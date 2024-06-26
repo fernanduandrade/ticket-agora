@@ -22,4 +22,8 @@
       <Folder Include="Controllers\" />
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\ETicket.Infrastructure\ETicket.Infrastructure.csproj" />
+    </ItemGroup>
+
 </Project>
