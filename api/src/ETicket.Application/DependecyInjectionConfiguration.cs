@@ -1,5 +1,5 @@
+using System.Reflection;
 using ETicket.Application.Behaviors;
-using ETicket.SharedKernel;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -9,6 +9,11 @@ public static class DependecyInjectionConfiguration
 {
     public static IServiceCollection AddMediatorConfig(this IServiceCollection services)
     {
+        services.AddAutoMapper(Assembly.GetExecutingAssembly());
+        services.AddMediatR(config =>
+        {
+            config.RegisterServicesFromAssemblies(Assembly.GetExecutingAssembly());
+        });
         services.AddScoped(typeof(IPipelineBehavior<,>), typeof(LoggingBehavior<,>));
         return services;
     }
