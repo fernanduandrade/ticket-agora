@@ -42,7 +42,6 @@ public static class ServicesDiConfig
 
     public static WebApplication InjectAppDepencies(this WebApplication app)
     {
-        app.MapIdentityApi<User>();
         app.UseAuthentication();
         app.UseAuthorization();
         return app;
