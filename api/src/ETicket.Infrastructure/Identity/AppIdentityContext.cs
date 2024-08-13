@@ -13,6 +13,6 @@ public class AppIdentityContext: IdentityDbContext<User, IdentityRole<long>, lon
     {
         base.OnModelCreating(builder);
         builder.HasDefaultSchema("identity");
-        
+        AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
     }
 }

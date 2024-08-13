@@ -5,6 +5,7 @@ using ETicket.Domain.Users;
 using ETicket.Infrastructure.Identity;
 using ETicket.Infrastructure.Services;
 using ETicket.Infrastructure.Setup;
+using ETicket.UseCases;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
@@ -24,7 +25,9 @@ public static class ServicesDiConfig
         services.AddCors(options =>
             options.AddDefaultPolicy(builder => builder.AllowAnyOrigin()
                 .AllowAnyHeader()
+                .SetPreflightMaxAge(TimeSpan.FromHours(24))
                 .AllowAnyMethod()));
+        
         services.AddHttpContextAccessor();
         services.ConfigureHttpClientDefaults(http =>
         {
@@ -42,8 +45,12 @@ public static class ServicesDiConfig
 
     public static WebApplication InjectAppDepencies(this WebApplication app)
     {
+        app.UseCors("CorsPolicy");
+        app.MapIdentityApi<User>();
+        
         app.UseAuthentication();
         app.UseAuthorization();
+        app.MapControllers();
         return app;
     }
 
@@ -77,11 +84,13 @@ public static class ServicesDiConfig
     public static IServiceCollection InjectDependecies(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddMediatorConfig()
+            .AddUserCasesConfig()
             .AddAppServicesConfig()
+            .AddApiBehaviors()
             .AddIdentityConfig(configuration)
             .AddPersistenceInterceptorConfig()
             .AddPersistenceConfig(configuration)
-            .AddApiBehaviors();
+            .AddIdentityAuthConfig(configuration);
         
         return services;
     }

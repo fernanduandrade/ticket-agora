@@ -11,10 +11,9 @@ public static class IdentityDiConfiguration
 {
     public static IServiceCollection AddIdentityConfig(this IServiceCollection services, IConfiguration configuration)
     {
-     
         services.AddDbContext<AppIdentityContext>(options =>
         {
-            options.UseNpgsql(configuration.GetConnectionString("AAP_DB"), config =>
+            options.UseNpgsql("Host=localhost;Port=5432;User Id=postgres;Password=postgres;Database=postgres", config =>
             {
                 config.EnableRetryOnFailure(3, (TimeSpan.FromSeconds(1) * 2), null);
             });

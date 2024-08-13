@@ -7,9 +7,9 @@ namespace ETicket.API.Controllers.Base;
 [Route("api/[controller]")]
 public class BaseController : ControllerBase
 {
-    private ISender _mediator;
+    private ISender? _mediator;
 
-    protected ISender Mediator =>
+    protected ISender? Mediator =>
         _mediator ??= HttpContext.RequestServices.GetService<ISender>();
 
 }
